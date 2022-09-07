@@ -1,0 +1,14 @@
+.capture {
+  padding: 10px 30px;
+  margin: 2px 50px;
+  max-width: 600px;
+  font-size: 30px;
+  font-style: italic;
+  color: rgb(109, 109, 224);
+  border: 2px solid rgb(109, 109, 224);
+}
+
+.red {
+  color: red;
+  border: 2px solid red;
+}
