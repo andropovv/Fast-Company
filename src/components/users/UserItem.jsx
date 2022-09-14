@@ -1,5 +1,6 @@
 import React from "react";
 import DeleteButton from "../../UI/DeleteButton/DeleteButton.jsx";
+import Bookmark from "./Bookmark.jsx";
 
 const UserItem = ({ user, handleDelete }) => {
   return (
@@ -16,6 +17,9 @@ const UserItem = ({ user, handleDelete }) => {
         <th>{user.profession.name}</th>
         <th>{user.completedMeetings}</th>
         <th>{user.rate}</th>
+        <th>
+          <Bookmark />
+        </th>
         <th>
           <DeleteButton onClick={() => handleDelete(user)}>
             Удалить

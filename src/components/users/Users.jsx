@@ -37,6 +37,7 @@ const Users = () => {
               <th>Встретился, раз</th>
               <th>Оценка</th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
