@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import api from "../../api";
+import { paginate } from "../../utils/paginate";
+import Pagination from "./Pagination";
 import UserCapture from "./UserCapture";
 import UserItem from "./UserItem";
 
 const Users = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
+  const count = users.length;
+  const pageSize = 4;
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleDelete = (user) => {
     setUsers(users.filter((cur) => cur._id !== user._id));
@@ -24,10 +29,16 @@ const Users = () => {
     return <UserCapture isUsers={isUsers}>{phrase}</UserCapture>;
   };
 
+  const handlePageChange = (pageIndex) => {
+    setCurrentPage(pageIndex);
+  };
+
+  const userCrop = paginate(users, pageSize, currentPage);
+
   return (
     <div>
       {renderPhrase(users.length)}
-      {users.length !== 0 && (
+      {count !== 0 && (
         <table className="table">
           <thead>
             <tr>
@@ -41,7 +52,7 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {userCrop.map((user) => (
               <UserItem
                 user={user}
                 key={user._id}
@@ -51,6 +62,12 @@ const Users = () => {
           </tbody>
         </table>
       )}
+      <Pagination
+        itemsCount={count}
+        pageSize={pageSize}
+        onPageChange={handlePageChange}
+        currentPage={currentPage}
+      />
     </div>
   );
 };

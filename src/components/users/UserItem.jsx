@@ -1,6 +1,7 @@
 import React from "react";
 import DeleteButton from "../../UI/DeleteButton/DeleteButton.jsx";
 import Bookmark from "./Bookmark.jsx";
+import PropTypes from "prop-types";
 
 const UserItem = ({ user, handleDelete }) => {
   return (
@@ -28,6 +29,11 @@ const UserItem = ({ user, handleDelete }) => {
       </tr>
     </>
   );
+};
+
+UserItem.propTypes = {
+  user: PropTypes.object.isRequired,
+  handleDelete: PropTypes.func.isRequired
 };
 
 export default UserItem;
