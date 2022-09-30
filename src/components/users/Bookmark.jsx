@@ -1,13 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import classes from "./Bookmark.module.css";
+import PropTypes from "prop-types";
 
-const Bookmark = () => {
-  const [isFavourites, setIsFavourites] = useState(false);
-
-  const changeFavourite = () => {
-    setIsFavourites((prevState) => !prevState);
-  };
-
+const Bookmark = ({ bookmark, ...rest }) => {
   const notMarked = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -44,10 +39,14 @@ const Bookmark = () => {
   );
 
   return (
-    <div className={classes.bookmark} onClick={changeFavourite}>
-      {isFavourites ? marked : notMarked}
+    <div className={classes.bookmark} {...rest}>
+      {bookmark ? marked : notMarked}
     </div>
   );
+};
+
+Bookmark.propTypes = {
+  bookmark: PropTypes.bool.isRequired
 };
 
 export default Bookmark;

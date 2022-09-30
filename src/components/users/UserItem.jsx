@@ -3,7 +3,7 @@ import DeleteButton from "../../UI/DeleteButton/DeleteButton.jsx";
 import Bookmark from "./Bookmark.jsx";
 import PropTypes from "prop-types";
 
-const UserItem = ({ user, handleDelete }) => {
+const UserItem = ({ user, handleDelete, onBookmarkToggle }) => {
   return (
     <>
       <tr>
@@ -19,7 +19,10 @@ const UserItem = ({ user, handleDelete }) => {
         <th>{user.completedMeetings}</th>
         <th>{user.rate}</th>
         <th>
-          <Bookmark />
+          <Bookmark
+            onClick={() => onBookmarkToggle(user._id)}
+            bookmark={user.bookmark}
+          />
         </th>
         <th>
           <DeleteButton onClick={() => handleDelete(user)}>
@@ -33,7 +36,8 @@ const UserItem = ({ user, handleDelete }) => {
 
 UserItem.propTypes = {
   user: PropTypes.object.isRequired,
-  handleDelete: PropTypes.func.isRequired
+  handleDelete: PropTypes.func.isRequired,
+  onBookmarkToggle: PropTypes.func.isRequired
 };
 
 export default UserItem;
