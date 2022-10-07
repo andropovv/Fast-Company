@@ -1,17 +1,19 @@
+import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import api from "../../api";
 import { paginate } from "../../utils/paginate";
 import GroupList from "./GroupList";
 import Pagination from "./Pagination";
 import UserCapture from "./UserCapture";
-import UserItem from "./UserItem";
+import UsersTable from "./UsersTable";
 
 const Users = () => {
-  const [users, setUsers] = useState();
-  const [professions, setProfessions] = useState();
-  const [selectedProf, setSelectedProf] = useState();
+  const [users, setUsers] = useState([]);
+  const [professions, setProfessions] = useState([]);
+  const [selectedProf, setSelectedProf] = useState(null);
   const pageSize = 4;
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
 
   useEffect(() => {
     api.users.fetchAll().then((data) => setUsers(data));
@@ -39,73 +41,65 @@ const Users = () => {
     setCurrentPage(1);
   };
 
-  const filteredUsers = selectedProf
-    ? users.filter((user) => selectedProf._id === user.profession._id)
-    : users;
-  const userCrop = filteredUsers
-    ? paginate(filteredUsers, pageSize, currentPage)
-    : undefined;
-
-  const clearFilter = () => {
-    setSelectedProf(undefined);
+  const onSort = (item) => {
+    setSortBy(item);
   };
+  if (users.length) {
+    const filteredUsers = selectedProf
+      ? users.filter((user) => selectedProf._id === user.profession._id)
+      : users;
 
-  return (
-    <div className="d-flex justify-content-center mt-5">
-      {professions && (
-        <div className="d-flex flex-column flex-shrink-0 p-3">
-          <GroupList
-            selectedItem={selectedProf}
-            items={professions}
-            onItemSelect={handleProfessionSelect}
-            valueProperty="_id"
-            contentProperty="name"
-          />
-          <button className="btn btn-secondary mt-2" onClick={clearFilter}>
-            Очистить
-          </button>
-        </div>
-      )}
-      {filteredUsers && (
-        <div className="d-flex flex-column">
-          <UserCapture usersCount={filteredUsers.length} />
-          {filteredUsers.length !== 0 && (
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Имя</th>
-                  <th>Качества</th>
-                  <th>Профессия</th>
-                  <th>Встретился, раз</th>
-                  <th>Оценка</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {userCrop.map((user) => (
-                  <UserItem
-                    user={user}
-                    key={user._id}
-                    handleDelete={handleDelete}
-                    onBookmarkToggle={handleChangeBookmark}
-                  />
-                ))}
-              </tbody>
-            </table>
-          )}{" "}
-          <div className="d-flex justify-content-center">
-            <Pagination
-              itemsCount={filteredUsers.length}
-              pageSize={pageSize}
-              onPageChange={handlePageChange}
-              currentPage={currentPage}
+    const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
+
+    const userCrop = filteredUsers
+      ? paginate(sortedUsers, pageSize, currentPage)
+      : undefined;
+
+    const clearFilter = () => {
+      setSelectedProf(undefined);
+    };
+
+    return (
+      <div className="d-flex justify-content-center mt-5">
+        {professions && (
+          <div className="d-flex flex-column flex-shrink-0 p-3">
+            <GroupList
+              selectedItem={selectedProf}
+              items={professions}
+              onItemSelect={handleProfessionSelect}
+              valueProperty="_id"
+              contentProperty="name"
             />
+            <button className="btn btn-secondary mt-2" onClick={clearFilter}>
+              Очистить
+            </button>
           </div>
-        </div>
-      )}
-    </div>
-  );
+        )}
+        {userCrop && (
+          <div className="d-flex flex-column">
+            <UserCapture usersCount={filteredUsers.length} />
+            {filteredUsers.length !== 0 && (
+              <UsersTable
+                users={userCrop}
+                onBookmarkToggle={handleChangeBookmark}
+                handleDelete={handleDelete}
+                onSort={onSort}
+                selectedSort={sortBy}
+              />
+            )}
+            <div className="d-flex justify-content-center">
+              <Pagination
+                itemsCount={filteredUsers.length}
+                pageSize={pageSize}
+                onPageChange={handlePageChange}
+                currentPage={currentPage}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  } else return "loading...";
 };
 
 export default Users;
