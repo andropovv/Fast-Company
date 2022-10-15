@@ -4,8 +4,9 @@ import Bookmark from "./Bookmark";
 import DeleteButton from "../../UI/DeleteButton/DeleteButton";
 import QualitiesList from "./QualitiesList";
 import Table from "./Table";
-import TableHeader from "../TableHeader";
 import TableBody from "./TableBody";
+import TableHeader from "./TableHeader";
+import { Link } from "react-router-dom";
 
 const UsersTable = ({
   users,
@@ -15,7 +16,11 @@ const UsersTable = ({
   onBookmarkToggle
 }) => {
   const columns = {
-    name: { path: "name", name: "Имя" },
+    name: {
+      path: "name",
+      name: "Имя",
+      component: (user) => <Link to={`users/${user._id}`}>{user.name}</Link>
+    },
     qualities: {
       name: "Качество",
       component: (user) => <QualitiesList user={user} />

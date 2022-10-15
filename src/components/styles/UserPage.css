@@ -1,0 +1,35 @@
+.user-block {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-top: 25px;
+  max-width: 80vw;
+  background-color: aliceblue;
+  height: 40vh;
+  border-radius: 20px;
+}
+
+.user-block__title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+}
+
+.user-block__info {
+  margin-left: 25px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.user-block__item {
+  font-size: 1.25rem;
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.user-block button {
+  align-self: end;
+  bottom: 10px;
+}
