@@ -5,6 +5,7 @@ import { paginate } from "../../utils/paginate";
 import GroupList from "./GroupList";
 import Pagination from "./Pagination";
 import UserCapture from "./UserCapture";
+import UsersSearch from "./UsersSearch";
 import UsersTable from "./UsersTable";
 
 const Users = () => {
@@ -14,6 +15,7 @@ const Users = () => {
   const pageSize = 4;
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
+  const [searchBy, setSearchBy] = useState("");
 
   useEffect(() => {
     api.users.fetchAll().then((data) => setUsers(data));
@@ -39,16 +41,27 @@ const Users = () => {
   const handleProfessionSelect = (item) => {
     setSelectedProf(item);
     setCurrentPage(1);
+    setSearchBy("");
+  };
+
+  const handleSearch = ({ target }) => {
+    setSelectedProf(undefined);
+    setSearchBy(target.value.toLowerCase());
   };
 
   const onSort = (item) => {
     setSortBy(item);
   };
   if (users.length) {
-    const filteredUsers = selectedProf
+    let filteredUsers = selectedProf
       ? users.filter((user) => selectedProf._id === user.profession._id)
       : users;
-
+    if (searchBy) {
+      const searchRegExp = new RegExp(`${searchBy}`, "g");
+      filteredUsers = users.filter((user) =>
+        searchRegExp.test(user.name.toLowerCase())
+      );
+    }
     const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
 
     const userCrop = filteredUsers
@@ -78,6 +91,7 @@ const Users = () => {
         {userCrop && (
           <div className="d-flex flex-column">
             <UserCapture usersCount={filteredUsers.length} />
+            <UsersSearch onSearch={handleSearch} value={searchBy} />
             {filteredUsers.length !== 0 && (
               <UsersTable
                 users={userCrop}
