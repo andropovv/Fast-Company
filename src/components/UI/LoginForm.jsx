@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import TextField from "../TextField";
 import { validator } from "../../utils/validator";
-import MyButton from "../../UI/MyButton/MyButton";
+import CheckBoxField from "../common/form/CheckBoxField";
+import TextField from "../common/form/TextField";
+import MyButton from "./MyButton/MyButton";
 
-const LoginPage = () => {
-  const [data, setData] = useState({ email: "", password: "" });
+const LoginForm = () => {
+  const [data, setData] = useState({ email: "", password: "", stayOn: false });
   const [errors, setErrors] = useState({});
 
-  const handleChange = ({ target }) => {
+  const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
 
@@ -53,34 +54,30 @@ const LoginPage = () => {
     console.log(data);
   };
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-md-6 offset-md-3 shadow p-4">
-          <h3 className="mb-4">Login</h3>
-          <form onSubmit={handleSubmit}>
-            <TextField
-              name="email"
-              onChange={handleChange}
-              value={data.email}
-              label="Электронная почта"
-              error={errors.email}
-            />
-            <TextField
-              name="password"
-              onChange={handleChange}
-              value={data.password}
-              label="Пароль"
-              type="password"
-              error={errors.password}
-            />
-            <MyButton type="submit" disabled={!isValid}>
-              Submit
-            </MyButton>
-          </form>
-        </div>
-      </div>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <TextField
+        name="email"
+        onChange={handleChange}
+        value={data.email}
+        label="Электронная почта"
+        error={errors.email}
+      />
+      <TextField
+        name="password"
+        onChange={handleChange}
+        value={data.password}
+        label="Пароль"
+        type="password"
+        error={errors.password}
+      />
+      <CheckBoxField value={data.stayOn} onChange={handleChange} name="stayOn">
+        Оставаться в системе
+      </CheckBoxField>
+      <MyButton type="submit" disabled={!isValid}>
+        Submit
+      </MyButton>
+    </form>
   );
 };
 
-export default LoginPage;
+export default LoginForm;

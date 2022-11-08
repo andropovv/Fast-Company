@@ -81,18 +81,26 @@ h6 {
 
 body {
   height: 100%;
+  overflow-x: hidden;
 }
 
 /* .... */
 
-.conteiner {
+.wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-.content {
+.main {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
+}
+
+[class*="__container"] {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
 }

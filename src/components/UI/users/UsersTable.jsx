@@ -1,11 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Bookmark from "./Bookmark";
 import DeleteButton from "../../UI/DeleteButton/DeleteButton";
-import QualitiesList from "./QualitiesList";
-import Table from "./Table";
-import TableBody from "./TableBody";
-import TableHeader from "./TableHeader";
+import QualitiesList from "../QualitiesList";
+import Bookmark from "../../common/BookMark";
+import Table, { TableBody, TableHeader } from "../../common/table";
 import { Link } from "react-router-dom";
 
 const UsersTable = ({

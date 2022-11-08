@@ -1,7 +1,7 @@
 .navbar {
-  display: flex;
   height: 50px;
-  background-color: rgb(26, 24, 24);
+  width: 100vw;
+  background-color: #fff;
 }
 
 .navbar__list {
@@ -16,5 +16,5 @@
 
 .navbar__item a {
   text-decoration: none;
-  color: white;
+  color: black;
 }

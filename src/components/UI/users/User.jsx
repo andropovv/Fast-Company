@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import MyButton from "../../UI/MyButton/MyButton";
 import { useHistory } from "react-router-dom";
-import QualitiesList from "./QualitiesList";
-import "../styles/UserPage.css";
+import QualitiesList from "../QualitiesList";
+import MyLink from "../MyLink/MyLink";
 
 const User = ({ user }) => {
   const history = useHistory();
@@ -26,7 +26,10 @@ const User = ({ user }) => {
         </li>
         <li className="user-block__item">Рейтинг: {user.rate}</li>
       </ul>
-      <MyButton onClick={() => backToUsers()}>Вернуться</MyButton>
+      <div className="user-block__buttons">
+        <MyLink to={`/users/${user._id}/edit`}>Редактировать </MyLink>
+        <MyButton onClick={() => backToUsers()}>Вернуться</MyButton>
+      </div>
     </div>
   );
 };

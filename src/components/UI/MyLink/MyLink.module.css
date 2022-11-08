@@ -1,0 +1,14 @@
+.myLink {
+  background-color: aliceblue;
+  padding: 6px 10px;
+  border: 2px solid black;
+  border-radius: 4px;
+  font-size: 1.15em;
+  box-shadow: 1px 1px 6px black;
+  max-width: 150px;
+  text-decoration: none;
+  color: black;
+}
+.myLink:hover {
+  color: black;
+}

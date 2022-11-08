@@ -9,10 +9,12 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module"
   },
+
   plugins: ["react"],
   rules: {
-    indent: ["error", 2, { SwitchCase: 1 }],
+    indent: "off",
     semi: [2, "always"],
+    "multiline-ternary": ["off"],
     quotes: ["error", "double", { allowTemplateLiterals: true }],
     "space-before-function-paren": [
       "error",

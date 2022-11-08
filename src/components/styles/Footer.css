@@ -1,4 +1,7 @@
 .footer {
   height: 100px;
-  background-color: rgb(26, 24, 24);
+  background-color: #fff;
+}
+.footer__container {
+  border-top: 1px solid black;
 }
