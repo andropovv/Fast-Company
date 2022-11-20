@@ -5,9 +5,9 @@ const QualitiesList = ({ user }) => {
   return (
     <>
       {user.qualities.map((quality) => (
-        <div key={quality._id} className={`badge bg-${quality.color} m-1`}>
+        <span key={quality._id} className={`badge bg-${quality.color} m-1`}>
           {quality.name}
-        </div>
+        </span>
       ))}
     </>
   );

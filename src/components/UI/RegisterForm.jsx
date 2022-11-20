@@ -20,13 +20,23 @@ const RegisterForm = () => {
   const [professions, setProfessions] = useState();
   const [errors, setErrors] = useState({});
   const [qualities, setQualities] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    api.professions.fetchAll().then((data) => setProfessions(data));
+    setIsLoading(true);
+    api.professions
+      .fetchAll()
+      .then((data) => {
+        const fixedProfessions = Object.keys(data).map((profName) => ({
+          label: data[profName].name,
+          value: data[profName]._id
+        }));
+        setProfessions(fixedProfessions);
+        console.log(professions);
+      })
+      .finally(() => setIsLoading(false));
     api.qualities.fetchAll().then((data) => setQualities(data));
   }, []);
-  useEffect(() => {}, [professions]);
-
   const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
@@ -97,15 +107,18 @@ const RegisterForm = () => {
         type="password"
         error={errors.password}
       />
-      <SelectField
-        options={professions}
-        label="Ваша профессия"
-        value={data.profession}
-        onChange={handleChange}
-        defaultOption="Выберите..."
-        error={errors.profession}
-        name="profession"
-      />
+      {!isLoading && (
+        <SelectField
+          options={professions}
+          label="Ваша профессия"
+          value={data.profession}
+          onChange={handleChange}
+          defaultOption="Выберите..."
+          error={errors.profession}
+          name="profession"
+        />
+      )}
+
       <RadioField
         value={data.sex}
         label="Выберите пол: "

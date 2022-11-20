@@ -4,6 +4,7 @@ import api from "../../../api";
 import { paginate } from "../../../utils/paginate";
 import GroupList from "../../common/GroupList";
 import Pagination from "../../common/Pagination";
+import Loader from "../../UI/loader/Loader";
 import UserCapture from "../../UI/users/UserCapture";
 import UsersSearch from "../../UI/users/UsersSearch";
 import UsersTable from "../../UI/users/UsersTable";
@@ -113,7 +114,7 @@ const UsersPage = () => {
         )}
       </div>
     );
-  } else return "loading...";
+  } else return <Loader />;
 };
 
 export default UsersPage;

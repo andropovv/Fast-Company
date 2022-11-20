@@ -1,34 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
-import MyButton from "../../UI/MyButton/MyButton";
-import { useHistory } from "react-router-dom";
-import QualitiesList from "../QualitiesList";
-import MyLink from "../MyLink/MyLink";
+import UserCard from "./UserCard";
+import { QualitiesCard } from "../qualities";
+import MeetingsCard from "../MeetingsCard";
+import { Comments } from "../comments";
 
 const User = ({ user }) => {
-  const history = useHistory();
-
-  const backToUsers = () => {
-    history.push("/users");
-  };
-
   return (
-    <div className="user-block">
-      <div className="user-block__title">Страница пользователя {user.name}</div>
-      <ul className="user-block__info">
-        <li className="user-block__item">Профессия: {user.profession.name}</li>
-        <li className="user-block__item">
-          Качества:
-          <QualitiesList user={user} />
-        </li>
-        <li className="user-block__item">
-          Встретился, раз: {user.completedMeetings}
-        </li>
-        <li className="user-block__item">Рейтинг: {user.rate}</li>
-      </ul>
-      <div className="user-block__buttons">
-        <MyLink to={`/users/${user._id}/edit`}>Редактировать </MyLink>
-        <MyButton onClick={() => backToUsers()}>Вернуться</MyButton>
+    <div className="container pt-5">
+      <div className="row gutters-sm">
+        <div className="col-md-4 mb-3">
+          <UserCard user={user} />
+          <QualitiesCard user={user} />
+          <MeetingsCard meetings={user.completedMeetings} />
+        </div>
+        <div className="col-md-8">
+          <Comments user={user} />
+        </div>
       </div>
     </div>
   );

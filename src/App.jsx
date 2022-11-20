@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Footer from "./components/common/Footer";
-import UserEditPage from "./components/pages/UserEditPage.jsx";
 import Navbar from "./components/UI/Navbar";
 import Login from "./layouts/Login";
 import Main from "./layouts/Main";
@@ -15,8 +14,7 @@ const App = () => {
         <div className="main__containerr">
           <Switch>
             <Route exact path="/" component={Main} />
-            <Route path="/users/:userId/edit" component={UserEditPage} />
-            <Route path="/users/:userId?" component={Users} />
+            <Route path="/users/:userId?/:edit?" component={Users} />
             <Route path="/login/:type?" component={Login} />
           </Switch>
         </div>
